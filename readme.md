@@ -1,0 +1,1 @@
+﻿Simple lib to use some useful tools for other project
