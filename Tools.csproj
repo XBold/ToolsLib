@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>net8.0</TargetFramework>
+	<AssemblyName>MyLibrary</AssemblyName>
+	<Authors>IlTuoNome</Authors>
+	<Company>IlTuoNomeOSocietà</Company>
+	<Description>Questa libreria offre funzioni matematiche di base.</Description>
+	<PackageVersion>1.0.0</PackageVersion>
+	<PackageId>MyLibrary</PackageId>
+	<RepositoryUrl>https://github.com/IlTuoRepo</RepositoryUrl>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>toolBox.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="toolBox.ico" />
+  </ItemGroup>
+
+</Project>
