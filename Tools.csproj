@@ -3,12 +3,12 @@
   <PropertyGroup>
 	<TargetFramework>net8.0</TargetFramework>
 	<AssemblyName>MyLibrary</AssemblyName>
-	<Authors>IlTuoNome</Authors>
-	<Company>IlTuoNomeOSocietà</Company>
-	<Description>Questa libreria offre funzioni matematiche di base.</Description>
-	<PackageVersion>1.0.0</PackageVersion>
-	<PackageId>MyLibrary</PackageId>
-	<RepositoryUrl>https://github.com/IlTuoRepo</RepositoryUrl>
+	<Authors>Federico Balestri</Authors>
+	<Company>PRIVATE</Company>
+	<Description>Useful and basic function to use in other projects</Description>
+	<PackageVersion>1.0.1</PackageVersion>
+	<PackageId>Tools</PackageId>
+	<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
