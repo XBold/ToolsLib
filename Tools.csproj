@@ -6,7 +6,7 @@
 		<Authors>Federico Balestri</Authors>
 		<Company>PRIVATE</Company>
 		<Description>Useful and basic function to use in other projects</Description>
-		<PackageVersion>1.0.4</PackageVersion>
+		<PackageVersion>1.1.1</PackageVersion>
 		<PackageId>ToolsLib</PackageId>
 		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,14 +15,15 @@
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
 		<PackageIcon>Images\toolBox.png</PackageIcon>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DebugType>none</DebugType>
+		<DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DebugType>none</DebugType>
+		<DebugType>none</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -31,7 +32,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
 	</ItemGroup>
+
+	<Target Name="CopyNuGetPackage" AfterTargets="Pack">
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).nupkg"
+			  DestinationFolder="$(UserProfile)\source\repos\NuGetLocal\$(ProjectName)\" />
+	</Target>
 
 </Project>
