@@ -1,9 +1,16 @@
-﻿using Tools.Classes;
+﻿using System.Text.RegularExpressions;
+using Tools.Classes;
 
 namespace Tools
 {
-    public static class Tools
+    public static partial class Tools
     {
+        [GeneratedRegex("[^0-9.]+")]
+        private static partial Regex NumericAndDots();
+        [GeneratedRegex("[^0-9]+")]
+        private static partial Regex Numeric();
+
+
         /// <summary>
         /// Add a line of log with the specified message
         /// </summary>
@@ -34,5 +41,24 @@ namespace Tools
         {
             return (value.CompareTo(min) < 0) ? min : (value.CompareTo(max) > 0) ? max : value;
         }
+
+        /// <summary>
+        /// Check that the input text contains only number or number with dots
+        /// </summary>
+        /// <param name="acceptDots">TRUE -> The input text can containt numbers AND dots</param>
+        public static bool IsTextNumeric(string text, bool acceptDots = false)
+        {
+            if (acceptDots)
+            {
+                Regex regex = NumericAndDots();
+                return !regex.IsMatch(text);
+            }
+            else
+            {
+                Regex regex = Numeric();
+                return !regex.IsMatch(text);
+            }
+        }
+
     }
 }
