@@ -1,22 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFramework>net8.0</TargetFramework>
-	<AssemblyName>MyLibrary</AssemblyName>
-	<Authors>IlTuoNome</Authors>
-	<Company>IlTuoNomeOSocietà</Company>
-	<Description>Questa libreria offre funzioni matematiche di base.</Description>
-	<PackageVersion>1.0.0</PackageVersion>
-	<PackageId>MyLibrary</PackageId>
-	<RepositoryUrl>https://github.com/IlTuoRepo</RepositoryUrl>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <ApplicationIcon>toolBox.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>Tools</AssemblyName>
+		<Authors>Federico Balestri</Authors>
+		<Company>PRIVATE</Company>
+		<Description>Useful and basic function to use in other projects</Description>
+		<PackageVersion>1.1.1</PackageVersion>
+		<PackageId>ToolsLib</PackageId>
+		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
+		<PackageIcon>Images\toolBox.png</PackageIcon>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="toolBox.ico" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="Images\toolBox.png" Pack="true" PackagePath="\" />
+		<None Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
+	</ItemGroup>
+
+	<Target Name="CopyNuGetPackage" AfterTargets="Pack">
+		<Copy SourceFiles="bin\$(Configuration)\$(PackageId).$(PackageVersion).nupkg"
+			  DestinationFolder="$(UserProfile)\source\repos\NuGetLocal\$(ProjectName)\" />
+	</Target>
 
 </Project>
