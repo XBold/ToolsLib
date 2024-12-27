@@ -1,4 +1,4 @@
-﻿namespace Tools.Classes
+﻿namespace Tools.Network
 {
     public class IP
     {

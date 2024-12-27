@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace Tools.Classes
+﻿namespace Tools
 {
     public static class Logger
     {
@@ -29,11 +27,11 @@ namespace Tools.Classes
 
         private static string CreateLog(string message, byte severity, byte numberOfMilliseconds = 3)
         {
-            string format = "dd-MM-yyyy HH:mm:ss:" + new string('f', General.Limit(numberOfMilliseconds, 1, 7));
+            string format = "dd-MM-yyyy HH:mm:ss:" + new string('f', Math.Limit(numberOfMilliseconds, 1, 7));
             format += " ";
             string sev = severity == 0 ? "[INFO]" : severity == 1 ? "[WARNING]" : severity == 2 ? "[CRITICAL]" : "[FATAL ERROR]";
             sev += " ";
-            return sev + (numberOfMilliseconds > 0 ? DateAndTime.Now.ToString(format) : "") + message;
+            return sev + (numberOfMilliseconds > 0 ? DateTime.Now.ToString(format) : "") + message;
         }
     }
 }

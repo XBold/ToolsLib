@@ -1,4 +1,4 @@
-﻿namespace Tools.Classes
+﻿namespace Tools.ObjectHandlers
 {
     public class InputFilters
     {
@@ -24,7 +24,7 @@
                 }
             }
 #else
-            if (sender is Microsoft.Maui.Controls.Entry entry)
+            if (sender is Entry entry)
             {
                 string filteredText = RemoveSpaces(entry.Text);
                 if (entry.Text != filteredText)

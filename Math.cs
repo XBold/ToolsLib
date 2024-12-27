@@ -2,7 +2,7 @@
 
 namespace Tools
 {
-    public static partial class General
+    public static partial class Math
     {
         [GeneratedRegex("[^0-9.]+")]
         private static partial Regex NumericAndDots();
