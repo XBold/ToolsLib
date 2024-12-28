@@ -10,11 +10,36 @@ namespace Tools
         private static partial Regex Numeric();
 
         /// <summary>
-        /// Limit the value between the MIN parameter and the MAX parameter
+        /// Limit the value between MIN and MAX parameters
         /// </summary>
         public static T Limit<T>(T value, T min, T max) where T : IComparable<T>
         {
-            return (value.CompareTo(min) < 0) ? min : (value.CompareTo(max) > 0) ? max : value;
+            var (minOk, maxOk) = SortMinMax(min, max);
+            return (value.CompareTo(minOk) < 0) ? minOk : (value.CompareTo(maxOk) > 0) ? maxOk : value;
+        }
+
+        /// <summary>
+        /// TRUE in case the value is between MIN and MAX parameters
+        /// </summary>
+        public static bool IsInrange<T>(T value, T min, T max) where T : IComparable<T>
+        {
+            var (minOk, maxOk) = SortMinMax(min, max);
+            return value.CompareTo(minOk) >= 0 && value.CompareTo(maxOk) <= 0;
+        }
+
+        /// <summary>
+        /// Simply check that min is < than max, otherwise will swap the 2 values
+        /// </summary>
+        private static (T minOk, T maxOk) SortMinMax<T>(T min, T max) where T : IComparable<T>
+        {
+            if (min.CompareTo(max) > 0)
+            {
+                T temp = min;
+                min = max;
+                max = temp;
+            }
+
+            return (min, max);
         }
 
         /// <summary>
