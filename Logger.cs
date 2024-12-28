@@ -1,4 +1,6 @@
-﻿namespace Tools
+﻿using Tools.Network;
+
+namespace Tools
 {
     public static class Logger
     {

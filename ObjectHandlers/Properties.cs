@@ -2,7 +2,7 @@
 {
     public static class Properties
     {
-        public static void RestoreColor(object sender, TextChangedEventArgs e)
+        public static void RestoreColor(object sender, EventArgs e)
         {
 #if WINDOWS
         if(senser is TextBox textBox)
