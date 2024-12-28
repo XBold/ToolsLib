@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 
 namespace Tools.Network
 {
-    public class TCPServer
+    public class TCP_Server
     {
         private TcpListener? _server;
         private CancellationTokenSource? _cancellationTokenSource;
@@ -21,7 +21,7 @@ namespace Tools.Network
         public event Func<TcpClient, Task>? OnClientConnected;
         public event Func<TcpClient, byte[], Task>? OnMessageReceived;
 
-        public static TCPServer? Create(string ip, out ValidationResult validationResult, int port = NetworkConstants.DefaultPort)
+        public static TCP_Server? Create(string ip, out ValidationResult validationResult, int port = NetworkConstants.DefaultPort)
         {
             validationResult = ValidateParameters(ip, port);
             if (!validationResult.IsValid)
@@ -29,10 +29,10 @@ namespace Tools.Network
                 return null;
             }
 
-            return new TCPServer(ip, port);
+            return new TCP_Server(ip, port);
         }
 
-        public static TCPServer? Create(out ValidationResult validationResult, int port = NetworkConstants.DefaultPort)
+        public static TCP_Server? Create(out ValidationResult validationResult, int port = NetworkConstants.DefaultPort)
         {
             validationResult = ValidateParameters(port);
             if (!validationResult.IsValid)
@@ -40,15 +40,15 @@ namespace Tools.Network
                 return null;
             }
 
-            return new TCPServer(port);
+            return new TCP_Server(port);
         }
 
-        private TCPServer(int port)
+        private TCP_Server(int port)
         {
             _port = port;
         }
 
-        private TCPServer(string ip, int port)
+        private TCP_Server(string ip, int port)
         {
             _ip = IPAddress.Parse(ip);
             _port = port;

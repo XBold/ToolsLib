@@ -5,7 +5,7 @@ using Tools.ValidationsAndExeptions;
 
 namespace Tools.Network
 {
-    public class TCPClient
+    public class TCP_Client
     {
         private TcpClient? _client;
         private NetworkStream? _stream;
