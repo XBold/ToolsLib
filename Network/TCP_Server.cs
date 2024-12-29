@@ -19,6 +19,7 @@ namespace Tools.Network
         private readonly ConcurrentDictionary<TcpClient, NetworkStream> _connectedClients = new();
 
         public event Func<TcpClient, Task>? OnClientConnected;
+        public event Func<TcpClient, Task>? OnClientDisconnected;
         public event Func<TcpClient, byte[], Task>? OnMessageReceived;
 
         public static TCP_Server? Create(string ip, out ValidationResult validationResult, int port = NetworkConstants.DefaultPort)
@@ -93,18 +94,33 @@ namespace Tools.Network
             Logger.Log("Server started...", 0);
             while (!cancellationToken.IsCancellationRequested)
             {
-                var client = await _server.AcceptTcpClientAsync();
-                Logger.Log("Client connected.", 0);
+                try
+                {
+                    var client = await _server.AcceptTcpClientAsync(cancellationToken);
+                    Logger.Log("Client connected.", 0);
 
-                // Store client and its stream
-                _connectedClients.TryAdd(client, client.GetStream());
+                    // Store client and its stream
+                    if (!_connectedClients.TryAdd(client, client.GetStream()))
+                    {
+                        Logger.Log($"Client {client.Client.AddressFamily.ToString()} already connected", 0);
+                        return;
+                    }
 
-                // Trigger OnClientConnected
-                if (OnClientConnected != null)
-                    await OnClientConnected.Invoke(client);
+                    // Trigger OnClientConnected
+                    if (OnClientConnected != null)
+                        await OnClientConnected.Invoke(client);            
 
-                // Start handling the client
-                _ = HandleClientAsync(client, cancellationToken);
+                    // Start handling the client
+                    _ = HandleClientAsync(client, cancellationToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger.Log("Server stop request succesfully received", 0);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"Unexpected error: {ex.Message}", 2);
+                }
             }
         }
 
@@ -144,6 +160,23 @@ namespace Tools.Network
             Logger.Log($"Broadcasted: {message}", 0);
         }
 
+        public List<TcpClient> GetTcpClients()
+        {
+            if ( _connectedClients.Count > 0 )
+            {
+                return [.. _connectedClients.Keys];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public TcpClient GetFirstTcpClient()
+        {
+            return (_connectedClients.Count > 0 ? _connectedClients.Keys.FirstOrDefault() : null);
+        }
+
         private async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)
         {
             var stream = client.GetStream();
@@ -173,7 +206,6 @@ namespace Tools.Network
                 }
                 else
                 {
-                    Logger.Log("Client disconnected.", 0);
                     break;
                 }
             }
@@ -182,6 +214,8 @@ namespace Tools.Network
             {
                 Logger.Log("Not possible to disconnet che client", 3);
             };
+            if (OnClientDisconnected != null)
+                await OnClientDisconnected.Invoke(client);
             client.Close();
         }
     }
