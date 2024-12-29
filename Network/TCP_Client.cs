@@ -31,7 +31,7 @@ namespace Tools.Network
 
                 try
                 {
-                    await _client.ConnectAsync(serverIp, serverPort);
+                    await _client.ConnectAsync(serverIp, serverPort, _cancellationTokenSource.Token);
                     _stream = _client.GetStream();
 
                     Logger.Log($"Connected to server {serverIp}:{serverPort}", 0);
@@ -40,6 +40,10 @@ namespace Tools.Network
 
                     // Start listening for incoming messages
                     _ = ReceiveMessagesAsync(_cancellationTokenSource.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger.Log("Connection terminated succesfully after requesting disconnection", 0);
                 }
                 catch (Exception ex)
                 {
@@ -54,7 +58,7 @@ namespace Tools.Network
         {
             var result = new ValidationResult();
 
-            if (!Math.IsInrange(port, NetworkConstants.MinPort, NetworkConstants.MaxPort))
+            if (!NetCheck.PortInRange(port))
             {
                 result.AddError(NetworkConstants.PortName, $"Port must be between {NetworkConstants.MinPort} and {NetworkConstants.MaxPort}.");
             }

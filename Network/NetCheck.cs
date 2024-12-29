@@ -4,7 +4,7 @@
     {
         public static bool PortInRange(int port)
         {
-            if (port > 1020 && port <= 65535)
+            if (port > NetworkConstants.MinPort && port <= NetworkConstants.MaxPort)
             {
                 return true;
             }
