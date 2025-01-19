@@ -17,11 +17,12 @@ namespace Tools.Network
         public event Func<Task>? OnDisconnection;
         public event Func<bool, Task>? OnConnectionStateChanged;
 
-        public async Task ConnectAsync(string serverIp, int serverPort)
+        public async Task ConnectAsync(string serverIp, int serverPort = NetworkConstants.DefaultPort)
         {
             var validationResult = ValidateParameters(serverIp, serverPort);
             if (!validationResult.IsValid)
             {
+                await UpdateConnectionStateAsync(false);
                 throw new ParameterValidationException("Paramteres not ok", validationResult);
             }
             else
@@ -44,6 +45,19 @@ namespace Tools.Network
                 catch (OperationCanceledException)
                 {
                     Logger.Log("Connection terminated succesfully after requesting disconnection", 0);
+                    await UpdateConnectionStateAsync(false);
+                }
+                catch (SocketException socketEx)
+                {
+                    if (socketEx.Message == "Connection refused")
+                    {
+                        Logger.Log("Connection refused", 0);
+                    }
+                    else
+                    {
+                        Logger.Log($"Socket exception: {socketEx.Message}", 2);
+                    }
+                    await UpdateConnectionStateAsync(false);
                 }
                 catch (Exception ex)
                 {
@@ -62,8 +76,8 @@ namespace Tools.Network
             {
                 result.AddError(NetworkConstants.PortName, $"Port must be between {NetworkConstants.MinPort} and {NetworkConstants.MaxPort}.");
             }
-
-            if (!IPAddress.TryParse(ip, out _))
+            
+            if (!NetCheck.IsStandardIPAddress(ip))
             {
                 result.AddError(NetworkConstants.IPName, "Invalid IP address format.");
             }

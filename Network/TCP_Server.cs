@@ -97,12 +97,12 @@ namespace Tools.Network
                 try
                 {
                     var client = await _server.AcceptTcpClientAsync(cancellationToken);
-                    Logger.Log("Client connected.", 0);
+                    Logger.Log("Client connected", 0);
 
                     // Store client and its stream
                     if (!_connectedClients.TryAdd(client, client.GetStream()))
                     {
-                        Logger.Log($"Client {client.Client.AddressFamily.ToString()} already connected", 0);
+                        Logger.Log("Client already connected", 0);
                         return;
                     }
 
