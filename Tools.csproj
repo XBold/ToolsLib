@@ -16,14 +16,26 @@
 		<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
 		<PackageIcon>Images\toolBox.png</PackageIcon>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<Platforms>Any CPU;iOS;Android</Platforms>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DebugType>none</DebugType>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Any CPU'">
+		<DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DebugType>none</DebugType>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Any CPU'">
+		<DefineConstants>TRACE;WINDOWS</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|iOS'">
+		<DefineConstants>DEBUG;TRACE;IOS</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|iOS'">
+		<DefineConstants>TRACE;IOS</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+		<DefineConstants>DEBUG;TRACE;ANDROID</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+		<DefineConstants>TRACE;ANDROID</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,7 +44,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
 	</ItemGroup>
 
 	<Target Name="CopyNuGetPackage" AfterTargets="Pack">
