@@ -14,10 +14,17 @@
 		<Nullable>enable</Nullable>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
-		<PackageIcon>Images\toolBox.png</PackageIcon>
+		<PackageIcon>toolBox.png</PackageIcon>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<Platforms>Any CPU;iOS;Android</Platforms>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Include="Images\toolBox.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 	
 	<ItemGroup>
 		<None Include="readme.md" Pack="true" PackagePath="\" />
