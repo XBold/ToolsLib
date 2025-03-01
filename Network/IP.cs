@@ -13,7 +13,7 @@
         {
             if (string.IsNullOrEmpty(ipAddress))
             {
-                Logger.Log("IP address is null or string is empty", 1);
+                Logger.Log("IP address is null or string is empty", Logger.Severity.WARNING);
                 error = true;
             }
 
@@ -32,7 +32,7 @@
             var parts = ipAddress.Split('.');
             if (parts.Length != 4)
             {
-                Logger.Log("Not possible to find the octet, there are more thant 4 parts divided by '.'", 1);
+                Logger.Log("Not possible to find the octet, there are more thant 4 parts divided by '.'", Logger.Severity.WARNING);
                 error = true;
                 return null;
             }
@@ -45,7 +45,7 @@
                 }
                 else
                 {
-                    Logger.Log("Not possible to parse the found part in the octet", 2);
+                    Logger.Log("Not possible to parse the found part in the octet", Logger.Severity.CRITICAL);
                     error = true;
                     return (byte)0;
                 }
@@ -127,7 +127,7 @@
             }
             if (Octets[3] + value > 255)
             {
-                Logger.Log("Not possible to increment the IP, final value is bigger than 255", 1);
+                Logger.Log("Not possible to increment the IP, final value is bigger than 255", Logger.Severity.WARNING);
                 error = true;
                 return;
             }

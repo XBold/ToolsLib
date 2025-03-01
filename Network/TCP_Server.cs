@@ -91,18 +91,18 @@ namespace Tools.Network
             _cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = _cancellationTokenSource.Token;
 
-            Logger.Log("Server started...", 0);
+            Logger.Log("Server started...", Logger.Severity.INFO);
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
                     var client = await _server.AcceptTcpClientAsync(cancellationToken);
-                    Logger.Log("Client connected.", 0);
+                    Logger.Log("Client connected", Logger.Severity.INFO);
 
                     // Store client and its stream
                     if (!_connectedClients.TryAdd(client, client.GetStream()))
                     {
-                        Logger.Log($"Client {client.Client.AddressFamily.ToString()} already connected", 0);
+                        Logger.Log("Client already connected", Logger.Severity.INFO);
                         return;
                     }
 
@@ -115,11 +115,11 @@ namespace Tools.Network
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger.Log("Server stop request succesfully received", 0);
+                    Logger.Log("Server stop request succesfully received", Logger.Severity.INFO);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Unexpected error: {ex.Message}", 2);
+                    Logger.Log($"Unexpected error: {ex.Message}", Logger.Severity.CRITICAL);
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace Tools.Network
                 client.Close();
             }
             _server?.Stop();
-            Logger.Log("Server stopped.", 0);
+            Logger.Log("Server stopped.", Logger.Severity.INFO);
         }
 
         public async Task SendMessageAsync(TcpClient client, string message)
@@ -141,7 +141,7 @@ namespace Tools.Network
             {
                 var data = Encoding.UTF8.GetBytes(message);
                 await stream.WriteAsync(data, 0, data.Length);
-                Logger.Log($"Sent to client: {message}", 0);
+                Logger.Log($"Sent to client: {message}", Logger.Severity.INFO);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Tools.Network
             }
 
             await Task.WhenAll(tasks);
-            Logger.Log($"Broadcasted: {message}", 0);
+            Logger.Log($"Broadcasted: {message}", Logger.Severity.INFO);
         }
 
         public List<TcpClient> GetTcpClients()
@@ -191,7 +191,7 @@ namespace Tools.Network
                 }
                 catch
                 {
-                    Logger.Log("Connection closed by client.", 0);
+                    Logger.Log("Connection closed by client.", Logger.Severity.INFO);
                     break;
                 }
 
@@ -212,7 +212,7 @@ namespace Tools.Network
 
             if(!_connectedClients.TryRemove(client, out _))
             {
-                Logger.Log("Not possible to disconnet che client", 3);
+                Logger.Log("Not possible to disconnet che client", Logger.Severity.FATAL_ERROR);
             };
             if (OnClientDisconnected != null)
                 await OnClientDisconnected.Invoke(client);

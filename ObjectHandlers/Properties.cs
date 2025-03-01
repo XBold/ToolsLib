@@ -4,8 +4,8 @@
     {
         public static void RestoreColor(object sender, EventArgs e)
         {
-#if WINDOWS
-        if(senser is TextBox textBox)
+#if WPF
+        if(sender is TextBox textBox)
         {
             textBox.ClearValue(BorderBrushProperty);
         }

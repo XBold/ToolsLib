@@ -10,7 +10,7 @@
         public static void Spaces(object sender, EventArgs e)
         {
             if (sender == null) return;
-#if WINDOWS
+#if WPF
             if (sender is System.Windows.Controls.TextBox textBox)
             {
                 string filteredText = RemoveSpaces(textBox.Text);
