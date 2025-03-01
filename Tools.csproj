@@ -6,7 +6,7 @@
 		<Authors>Federico Balestri</Authors>
 		<Company>PRIVATE</Company>
 		<Description>Useful and basic function to use in other projects</Description>
-		<PackageVersion>1.2.6</PackageVersion>
+		<PackageVersion>1.3.0</PackageVersion>
 		<PackageId>ToolsLib</PackageId>
 		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,28 +18,8 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<Platforms>Any CPU;iOS;Android</Platforms>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Any CPU'">
-		<DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Any CPU'">
-		<DefineConstants>TRACE;WINDOWS</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|iOS'">
-		<DefineConstants>DEBUG;TRACE;IOS</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|iOS'">
-		<DefineConstants>TRACE;IOS</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
-		<DefineConstants>DEBUG;TRACE;ANDROID</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
-		<DefineConstants>TRACE;ANDROID</DefineConstants>
-	</PropertyGroup>
-
+	
 	<ItemGroup>
-		<None Update="Images\toolBox.png" Pack="true" PackagePath="\" />
 		<None Include="readme.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 

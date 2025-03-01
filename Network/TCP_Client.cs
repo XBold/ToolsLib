@@ -35,7 +35,7 @@ namespace Tools.Network
                     await _client.ConnectAsync(serverIp, serverPort, _cancellationTokenSource.Token);
                     _stream = _client.GetStream();
 
-                    Logger.Log($"Connected to server {serverIp}:{serverPort}", 0);
+                    Logger.Log($"Connected to server {serverIp}:{serverPort}", Logger.Severity.INFO);
 
                     await UpdateConnectionStateAsync(true);
 
@@ -44,24 +44,24 @@ namespace Tools.Network
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger.Log("Connection terminated succesfully after requesting disconnection", 0);
+                    Logger.Log("Connection terminated succesfully after requesting disconnection", Logger.Severity.INFO);
                     await UpdateConnectionStateAsync(false);
                 }
                 catch (SocketException socketEx)
                 {
                     if (socketEx.Message == "Connection refused")
                     {
-                        Logger.Log("Connection refused", 0);
+                        Logger.Log("Connection refused", Logger.Severity.INFO);
                     }
                     else
                     {
-                        Logger.Log($"Socket exception: {socketEx.Message}", 2);
+                        Logger.Log($"Socket exception: {socketEx.Message}", Logger.Severity.CRITICAL);
                     }
                     await UpdateConnectionStateAsync(false);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Error connecting to server: {ex.Message}", 2);
+                    Logger.Log($"Error connecting to server: {ex.Message}", Logger.Severity.CRITICAL);
                     await UpdateConnectionStateAsync(false);
                     throw;
                 }
@@ -92,7 +92,7 @@ namespace Tools.Network
                 _cancellationTokenSource?.Cancel();
                 _client?.Close();
                 _client = null;
-                Logger.Log("Disconnected from server.", 0);
+                Logger.Log("Disconnected from server.", Logger.Severity.INFO);
 
                 _ = UpdateConnectionStateAsync(false);
 
@@ -101,7 +101,7 @@ namespace Tools.Network
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error during disconnection: {ex.Message}", 2);
+                Logger.Log($"Error during disconnection: {ex.Message}", Logger.Severity.CRITICAL);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Tools.Network
         {
             if (_stream == null || !_client!.Connected)
             {
-                Logger.Log("Cannot send message. Not connected to the server.", 2);
+                Logger.Log("Cannot send message. Not connected to the server.", Logger.Severity.CRITICAL);
                 return;
             }
 
@@ -121,7 +121,7 @@ namespace Tools.Network
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error sending message: {ex.Message}", 2);
+                Logger.Log($"Error sending message: {ex.Message}", Logger.Severity.CRITICAL);
             }
         }
 
@@ -148,7 +148,7 @@ namespace Tools.Network
                     }
                     else
                     {
-                        Logger.Log("Server disconnected.", 1);
+                        Logger.Log("Server disconnected.", Logger.Severity.WARNING);
                         Disconnect();
                         break;
                     }
@@ -156,7 +156,7 @@ namespace Tools.Network
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error receiving messages: {ex.Message}", 2);
+                Logger.Log($"Error receiving messages: {ex.Message}", Logger.Severity.CRITICAL);
                 Disconnect();
             }
         }
