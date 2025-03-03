@@ -31,7 +31,16 @@
         {
             string log = CreateLog(message, severity, numberOfMilliseconds);
             Console.WriteLine(log);
-            File.AppendAllText(filePathAndName, log);
+#if WPF
+            try
+            {
+                File.AppendAllText(filePathAndName, log);
+            }
+            catch (Exception ex)
+            {
+                LogConsole("EXCEPTION SAVING FILE LOG: " + ex.Message, Severity.FATAL_ERROR);
+            }
+#endif
         }
 
         private static string CreateLog(string message, Severity severity, byte numberOfMilliseconds = 3)

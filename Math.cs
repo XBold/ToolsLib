@@ -12,7 +12,7 @@ namespace Tools
         /// <summary>
         /// Limit the value between MIN and MAX parameters
         /// </summary>
-        public static T Limit<T>(T value, T min, T max) where T : IComparable<T>
+        public static T Limit<T>(T min, T value, T max) where T : IComparable<T>
         {
             var (minOk, maxOk) = SortMinMax(min, max);
             return (value.CompareTo(minOk) < 0) ? minOk : (value.CompareTo(maxOk) > 0) ? maxOk : value;
