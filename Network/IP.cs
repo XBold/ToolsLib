@@ -1,4 +1,7 @@
-﻿namespace Tools.Network
+﻿using static Tools.Logger.Logger;
+using Tools.Logger;
+
+namespace Tools.Network
 {
     public class IP
     {
@@ -13,7 +16,7 @@
         {
             if (string.IsNullOrEmpty(ipAddress))
             {
-                Logger.Log("IP address is null or string is empty", Logger.Severity.WARNING);
+                Log("IP address is null or string is empty", Severity.WARNING);
                 error = true;
             }
 
@@ -32,7 +35,7 @@
             var parts = ipAddress.Split('.');
             if (parts.Length != 4)
             {
-                Logger.Log("Not possible to find the octet, there are more thant 4 parts divided by '.'", Logger.Severity.WARNING);
+                Log("Not possible to find the octet, there are more thant 4 parts divided by '.'", Severity.WARNING);
                 error = true;
                 return null;
             }
@@ -45,7 +48,7 @@
                 }
                 else
                 {
-                    Logger.Log("Not possible to parse the found part in the octet", Logger.Severity.CRITICAL);
+                    Log("Not possible to parse the found part in the octet", Severity.CRITICAL);
                     error = true;
                     return (byte)0;
                 }
@@ -127,7 +130,7 @@
             }
             if (Octets[3] + value > 255)
             {
-                Logger.Log("Not possible to increment the IP, final value is bigger than 255", Logger.Severity.WARNING);
+                Log("Not possible to increment the IP, final value is bigger than 255", Severity.WARNING);
                 error = true;
                 return;
             }

@@ -1,22 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<AssemblyName>Tools</AssemblyName>
-		<Authors>Federico Balestri</Authors>
-		<Company>PRIVATE</Company>
-		<Description>Useful and basic function to use in other projects</Description>
-		<PackageVersion>1.3.2</PackageVersion>
-		<PackageId>ToolsLib</PackageId>
-		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
-		<PackageIcon>Images\toolBox.png</PackageIcon>
-		<OutputPath>bin\$(Configuration)\</OutputPath>
-	</PropertyGroup>
+		<PropertyGroup>
+			<TargetFramework>net9.0</TargetFramework>
+			<AssemblyName>Tools</AssemblyName>
+			<Authors>Federico Balestri</Authors>
+			<Company>PRIVATE</Company>
+			<Description>Useful and basic function to use in other projects</Description>
+			<PackageVersion>1.4.0</PackageVersion>
+			<PackageId>ToolsLib</PackageId>
+			<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
+			<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+			<ImplicitUsings>enable</ImplicitUsings>
+			<Nullable>enable</Nullable>
+			<PackageReadmeFile>readme.md</PackageReadmeFile>
+			<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
+			<PackageIcon>Images\toolBox.png</PackageIcon>
+			<OutputPath>bin\$(Configuration)\</OutputPath>
+			<DefineConstants>$(DefineConstants);DEBUG_OUTPUT_PANE</DefineConstants>
+			<EnableComInterop>true</EnableComInterop>
+		</PropertyGroup>
+
+		<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		</ItemGroup>
 
 	<ItemGroup>
 		<None Update="Images\toolBox.png" Pack="true" PackagePath="\" />
@@ -25,6 +30,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.VisualStudio.Shell.Interop" Version="17.13.40008" />
 	</ItemGroup>
 
 	<Target Name="CopyNuGetPackage" AfterTargets="Pack">

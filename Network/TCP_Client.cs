@@ -2,6 +2,8 @@
 using System.Net.Sockets;
 using System.Text;
 using Tools.ValidationsAndExeptions;
+using static Tools.Logger.Logger;
+using Tools.Logger;
 
 namespace Tools.Network
 {
@@ -35,7 +37,7 @@ namespace Tools.Network
                     await _client.ConnectAsync(serverIp, serverPort, _cancellationTokenSource.Token);
                     _stream = _client.GetStream();
 
-                    Logger.Log($"Connected to server {serverIp}:{serverPort}", Logger.Severity.INFO);
+                    Log($"Connected to server {serverIp}:{serverPort}", Severity.INFO);
 
                     await UpdateConnectionStateAsync(true);
 
@@ -44,24 +46,24 @@ namespace Tools.Network
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger.Log("Connection terminated succesfully after requesting disconnection", Logger.Severity.INFO);
+                    Log("Connection terminated succesfully after requesting disconnection", Severity.INFO);
                     await UpdateConnectionStateAsync(false);
                 }
                 catch (SocketException socketEx)
                 {
                     if (socketEx.Message == "Connection refused")
                     {
-                        Logger.Log("Connection refused", Logger.Severity.INFO);
+                        Log("Connection refused", Severity.INFO);
                     }
                     else
                     {
-                        Logger.Log($"Socket exception: {socketEx.Message}", Logger.Severity.CRITICAL);
+                        Log($"Socket exception: {socketEx.Message}", Severity.CRITICAL);
                     }
                     await UpdateConnectionStateAsync(false);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Error connecting to server: {ex.Message}", Logger.Severity.CRITICAL);
+                    Log($"Error connecting to server: {ex.Message}", Severity.CRITICAL);
                     await UpdateConnectionStateAsync(false);
                     throw;
                 }
@@ -92,7 +94,7 @@ namespace Tools.Network
                 _cancellationTokenSource?.Cancel();
                 _client?.Close();
                 _client = null;
-                Logger.Log("Disconnected from server.", Logger.Severity.INFO);
+                Log("Disconnected from server.", Severity.INFO);
 
                 _ = UpdateConnectionStateAsync(false);
 
@@ -101,7 +103,7 @@ namespace Tools.Network
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error during disconnection: {ex.Message}", Logger.Severity.CRITICAL);
+                Log($"Error during disconnection: {ex.Message}", Severity.CRITICAL);
             }
         }
 
@@ -109,7 +111,7 @@ namespace Tools.Network
         {
             if (_stream == null || !_client!.Connected)
             {
-                Logger.Log("Cannot send message. Not connected to the server.", Logger.Severity.CRITICAL);
+                Log("Cannot send message. Not connected to the server.", Severity.CRITICAL);
                 return;
             }
 
@@ -117,11 +119,11 @@ namespace Tools.Network
             {
                 var data = Encoding.UTF8.GetBytes(message);
                 await _stream.WriteAsync(data, 0, data.Length);
-                Logger.Log($"Sent to server: {message}", 0);
+                Log($"Sent to server: {message}", Severity.INFO);
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error sending message: {ex.Message}", Logger.Severity.CRITICAL);
+                Log($"Error sending message: {ex.Message}", Severity.CRITICAL);
             }
         }
 
@@ -148,7 +150,7 @@ namespace Tools.Network
                     }
                     else
                     {
-                        Logger.Log("Server disconnected.", Logger.Severity.WARNING);
+                        Log("Server disconnected.", Severity.WARNING);
                         Disconnect();
                         break;
                     }
@@ -156,7 +158,7 @@ namespace Tools.Network
             }
             catch (Exception ex)
             {
-                Logger.Log($"Error receiving messages: {ex.Message}", Logger.Severity.CRITICAL);
+                Log($"Error receiving messages: {ex.Message}", Severity.CRITICAL);
                 Disconnect();
             }
         }

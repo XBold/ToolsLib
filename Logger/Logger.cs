@@ -1,14 +1,18 @@
-﻿namespace Tools
+﻿using System.Diagnostics;
+
+namespace Tools.Logger
 {
     public static class Logger
     {
-        public enum Severity
+        static Logger()
         {
-            INFO,
-            WARNING,
-            CRITICAL,
-            FATAL_ERROR
+#if DEBUG_OUTPUT_PANE
+            // Registra il listener custom SOLO in Debug
+            Trace.Listeners.Add(new CustomOutputPaneTraceListener());
+            Trace.AutoFlush = true;
+#endif
         }
+        
         /// <summary>
         /// Add a line of log with the specified message
         /// </summary>
@@ -17,7 +21,7 @@
         /// <param name="numberOfMilliseconds">Number of milliseconds to use in the date and time. 0 = NO DATE AND TIME. Parameter not specified = 3 millseconds unit</param>
         public static void LogConsole(string message, Severity severity, byte numberOfMilliseconds = 3)
         {
-            Console.WriteLine(CreateLog(message, severity, numberOfMilliseconds));
+            Trace.WriteLine(CreateLog(message, severity, numberOfMilliseconds));
         }
 
         /// <summary>
@@ -30,7 +34,7 @@
         public static void Log(string message, Severity severity, string filePathAndName = "log.txt", byte numberOfMilliseconds = 3)
         {
             string log = CreateLog(message, severity, numberOfMilliseconds);
-            Console.WriteLine(log);
+            Trace.WriteLine(log);
 #if WPF
             try
             {

@@ -60,5 +60,33 @@ namespace Tools
             }
         }
 
+
+        //IMPORTED MANUALLY FROM SYSTEM.MATH
+        public static double Abs(double value) => System.Math.Abs(value);
+        public static float Abs(float value) => System.Math.Abs(value);
+        public static int Abs(int value) => System.Math.Abs(value);
+        public static double Acos(double d) => System.Math.Acos(d);
+        public static double Asin(double d) => System.Math.Asin(d);
+        public static double Atan(double d) => System.Math.Atan(d);
+        public static double Atan2(double y, double x) => System.Math.Atan2(y, x);
+        public static double Ceiling(double a) => System.Math.Ceiling(a);
+        public static double Cos(double d) => System.Math.Cos(d);
+        public static double Cosh(double value) => System.Math.Cosh(value);
+        public static double Exp(double d) => System.Math.Exp(d);
+        public static double Floor(double d) => System.Math.Floor(d);
+        public static double Log(double d) => System.Math.Log(d);
+        public static double Log10(double d) => System.Math.Log10(d);
+        public static double Max(double val1, double val2) => System.Math.Max(val1, val2);
+        public static int Max(int val1, int val2) => System.Math.Max(val1, val2);
+        public static double Min(double val1, double val2) => System.Math.Min(val1, val2);
+        public static int Min(int val1, int val2) => System.Math.Min(val1, val2);
+        public static double Pow(double x, double y) => System.Math.Pow(x, y);
+        public static double Round(double a) => System.Math.Round(a);
+        public static double Round(double value, int digits) => System.Math.Round(value, digits);
+        public static int Sign(double value) => System.Math.Sign(value);
+        public static double Sin(double a) => System.Math.Sin(a);
+        public static double Sqrt(double d) => System.Math.Sqrt(d);
+        public static double Tan(double a) => System.Math.Tan(a);
+        public static double Truncate(double d) => System.Math.Truncate(d);
     }
 }
