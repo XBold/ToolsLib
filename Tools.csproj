@@ -16,12 +16,7 @@
 			<ApplicationIcon>Images\toolBox.ico</ApplicationIcon>
 			<PackageIcon>Images\toolBox.png</PackageIcon>
 			<OutputPath>bin\$(Configuration)\</OutputPath>
-			<DefineConstants>$(DefineConstants);DEBUG_OUTPUT_PANE</DefineConstants>
-			<EnableComInterop>true</EnableComInterop>
 		</PropertyGroup>
-
-		<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		</ItemGroup>
 
 	<ItemGroup>
 		<None Update="Images\toolBox.png" Pack="true" PackagePath="\" />
@@ -30,7 +25,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
-		<PackageReference Include="Microsoft.VisualStudio.Shell.Interop" Version="17.13.40008" />
 	</ItemGroup>
 
 	<Target Name="CopyNuGetPackage" AfterTargets="Pack">

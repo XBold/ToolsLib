@@ -3,16 +3,7 @@
 namespace Tools.Logger
 {
     public static class Logger
-    {
-        static Logger()
-        {
-#if DEBUG_OUTPUT_PANE
-            // Registra il listener custom SOLO in Debug
-            Trace.Listeners.Add(new CustomOutputPaneTraceListener());
-            Trace.AutoFlush = true;
-#endif
-        }
-        
+    {        
         /// <summary>
         /// Add a line of log with the specified message
         /// </summary>
