@@ -1,4 +1,5 @@
-﻿namespace Tools.ObjectHandlers
+﻿using static Tools.GeneralChecks;
+namespace Tools.ObjectHandlers
 {
     public class InputFilters
     {
@@ -35,18 +36,6 @@
                 }
             }
 #endif
-        }
-
-        /// <summary>
-        /// Method used to remove all spaces from a string
-        /// </summary>
-        /// <param name="input">La stringa da filtrare.</param>
-        /// <returns>La stringa filtrata.</returns>
-        private static string RemoveSpaces(string input)
-        {
-            return string.IsNullOrEmpty(input)
-                ? string.Empty
-                : new string(input.Where(c => !char.IsWhiteSpace(c)).ToArray());
         }
     }
 }

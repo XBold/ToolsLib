@@ -6,7 +6,7 @@ using System.IO;
 namespace Tools.Logger
 {
     public static class Logger
-    {        
+    {
         /// <summary>
         /// Add a line of log with the specified message
         /// </summary>
