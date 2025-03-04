@@ -93,6 +93,11 @@ namespace Tools.Network
             }
         }
 
+        /// <summary>
+        /// Get the broadcast address of the subnet
+        /// </summary>
+        /// <param name="subnetMask">Insert the subnet mask</param>
+        /// <returns></returns>
         public string GetBroadcastAddress(string subnetMask)
         {
             var maskBytes = ParseIPAddress(subnetMask);
@@ -106,6 +111,11 @@ namespace Tools.Network
             return string.Join(".", broadcastBytes);
         }
 
+        /// <summary>
+        /// Get the network address of the subnet
+        /// </summary>
+        /// <param name="subnetMask">Insert the subnet mask</param>
+        /// <returns></returns>
         public string GetNetworkAddress(string subnetMask)
         {
             var maskBytes = ParseIPAddress(subnetMask);

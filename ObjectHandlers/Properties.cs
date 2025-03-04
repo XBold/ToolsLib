@@ -1,7 +1,15 @@
-﻿namespace Tools.ObjectHandlers
+﻿#if WPF
+using System.Windows;
+using System.Windows.Controls;
+#endif
+namespace Tools.ObjectHandlers
 {
     public static class Properties
     {
+#if WPF
+        public static DependencyProperty BorderBrushProperty { get; private set; }
+#endif
+
         public static void RestoreColor(object sender, EventArgs e)
         {
 #if WPF

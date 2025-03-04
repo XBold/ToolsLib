@@ -4,6 +4,7 @@ using System.Text;
 using Tools.ValidationsAndExeptions;
 using static Tools.Logger.Logger;
 using Tools.Logger;
+using static Tools.Network.NetworkConstants;
 
 namespace Tools.Network
 {
@@ -12,14 +13,29 @@ namespace Tools.Network
         private TcpClient? _client;
         private NetworkStream? _stream;
         private CancellationTokenSource? _cancellationTokenSource;
-        private readonly IPAddress _ip = IPAddress.Any;
-        private readonly int _port;
 
+        /// <summary>
+        /// Event when a new message is received
+        /// </summary>
         public event Func<byte[], Task>? OnMessageReceived;
+        /// <summary>
+        /// Event when the client is disconnected
+        /// </summary>
         public event Func<Task>? OnDisconnection;
+        /// <summary>
+        /// Event when the connection state changes
+        /// </summary>
         public event Func<bool, Task>? OnConnectionStateChanged;
 
-        public async Task ConnectAsync(string serverIp, int serverPort = NetworkConstants.DefaultPort)
+        /// <summary>
+        /// Create a new TCP client
+        /// <para/>
+        /// Throw an exepction <see cref="ParameterValidationException"/> if parmaters are not valid
+        /// </summary>
+        /// <param name="serverIp">Specify the server IP</param>
+        /// <param name="serverPort">Specify the server port</param>
+        /// <exception cref="ParameterValidationException"/>
+        public async Task ConnectAsync(string serverIp, int serverPort = DefaultPort)
         {
             var validationResult = ValidateParameters(serverIp, serverPort);
             if (!validationResult.IsValid)
@@ -70,23 +86,26 @@ namespace Tools.Network
             }
         }
 
-        public static ValidationResult ValidateParameters(string ip, int port)
+        private static ValidationResult ValidateParameters(string ip, int port)
         {
             var result = new ValidationResult();
 
             if (!NetCheck.PortInRange(port))
             {
-                result.AddError(NetworkConstants.PortName, $"Port must be between {NetworkConstants.MinPort} and {NetworkConstants.MaxPort}.");
+                result.AddError(PortName, $"Port must be between {MinPort} and {MaxPort}.");
             }
             
             if (!NetCheck.IsStandardIPAddress(ip))
             {
-                result.AddError(NetworkConstants.IPName, "Invalid IP address format.");
+                result.AddError(IPName, "Invalid IP address format.");
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Disconnect from the server
+        /// </summary>
         public void Disconnect()
         {
             try
@@ -107,6 +126,11 @@ namespace Tools.Network
             }
         }
 
+        /// <summary>
+        /// Send a message to the server
+        /// </summary>
+        /// <param name="message">Insert the message that has to be sent</param>
+        /// <returns></returns>
         public async Task SendMessageAsync(string message)
         {
             if (_stream == null || !_client!.Connected)
