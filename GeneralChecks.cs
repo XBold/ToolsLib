@@ -1,4 +1,8 @@
-﻿namespace Tools
+﻿using System.IO;
+using static Tools.Logger.Logger;
+using static Tools.Logger.Severity;
+
+namespace Tools
 {
     public static class GeneralChecks
     {
@@ -9,11 +13,47 @@
         /// <returns>True if the file name contains invalid symbols</returns>
         public static bool CheckFileName(string fileName)
         {
-            if (fileName.Contains('\\') || fileName.Contains('/') || fileName.Contains(':') || fileName.Contains('*') || fileName.Contains('?') || fileName.Contains('\'') || fileName.Contains('<') || fileName.Contains('>') || fileName.Contains('|'))
+            if (fileName.Contains('\\') || fileName.Contains('/') || fileName.Contains(':') || fileName.Contains('*') || fileName.Contains('?') || fileName.Contains('\'') || fileName.Contains('<') || fileName.Contains('>') || fileName.Contains('|') || string.IsNullOrEmpty(fileName))
             {
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Check if the directory is valid. IT DOESN'T CHECK IF THE DIRECTORY EXISTS
+        /// </summary>
+        /// <param name="path">Inser the path that need to be checked</param>
+        /// <returns>True if there's an error in the path</returns>
+        public static bool CheckDirectory(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return true;
+
+            try
+            {
+                string fullPath = Path.GetFullPath(path);
+
+                if (!Path.IsPathRooted(fullPath))
+                    return true;
+
+                string fileName = Path.GetFileName(fullPath);
+
+                if (string.IsNullOrWhiteSpace(fileName) || !Path.HasExtension(fileName))
+                    return true;
+
+                string? directory = Path.GetDirectoryName(fullPath);
+
+                if (string.IsNullOrWhiteSpace(directory))
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log($"Error while checking the directory\nError: {ex.Message}", FATAL_ERROR);
+                return true;
+            }
         }
 
         /// <summary>

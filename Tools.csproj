@@ -7,7 +7,7 @@
 		<Authors>Federico Balestri</Authors>
 		<Company>PRIVATE</Company>
 		<Description>Useful and basic function to use in other projects</Description>
-		<PackageVersion>1.5.3</PackageVersion>
+		<PackageVersion>1.5.4</PackageVersion>
 		<PackageId>ToolsLib</PackageId>
 		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>

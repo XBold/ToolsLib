@@ -15,7 +15,7 @@ namespace Tools.Logger
         /// <param name="numberOfMilliseconds">Number of milliseconds to use in the date and time. 0 = NO DATE AND TIME. Parameter not specified = 3 millseconds unit</param>
         public static void LogConsole(string message, Severity severity, byte numberOfMilliseconds = 3)
         {
-            Trace.WriteLine(CreateLog(message, severity, numberOfMilliseconds));
+            Console.WriteLine(CreateLog(message, severity, numberOfMilliseconds));
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Tools.Logger
         public static void Log(string message, Severity severity, string filePathAndName = "log.txt", byte numberOfMilliseconds = 3)
         {
             string log = CreateLog(message, severity, numberOfMilliseconds);
-            Trace.WriteLine(log);
+            Console.WriteLine(log);
 #if WPF
             try
             {
