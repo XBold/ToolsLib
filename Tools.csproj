@@ -3,11 +3,12 @@
 	<PropertyGroup>
 		<!-- Multi-targeting per supportare diversi contesti -->
 		<TargetFrameworks>net9.0-windows;net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 		<AssemblyName>Tools</AssemblyName>
 		<Authors>Federico Balestri</Authors>
 		<Company>PRIVATE</Company>
 		<Description>Useful and basic function to use in other projects</Description>
-		<PackageVersion>1.5.4</PackageVersion>
+		<PackageVersion>1.5.5</PackageVersion>
 		<PackageId>ToolsLib</PackageId>
 		<RepositoryUrl>https://github.com/XBold/ToolsLib</RepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,6 +24,10 @@
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows'">
 		<DefineConstants>WPF</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
+		<DefineConstants>WINDOWS</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
@@ -43,7 +48,7 @@
 	</ItemGroup>
 
 	<!-- Inclusione condizionale di MAUI solo per target Android, iOS, MacCatalyst -->
-	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android' OR '$(TargetFramework)' == 'net9.0-ios' OR '$(TargetFramework)' == 'net9.0-maccatalyst'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android' OR '$(TargetFramework)' == 'net9.0-ios' OR '$(TargetFramework)' == 'net9.0-maccatalyst' OR '$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
 	</ItemGroup>
 

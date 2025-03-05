@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-#if WPF
-using System.IO;
-#endif
-
+﻿using System.IO;
 namespace Tools.Logger
 {
     public static class Logger
@@ -29,7 +25,6 @@ namespace Tools.Logger
         {
             string log = CreateLog(message, severity, numberOfMilliseconds);
             Console.WriteLine(log);
-#if WPF
             try
             {
                 File.AppendAllText(filePathAndName, log);
@@ -38,7 +33,6 @@ namespace Tools.Logger
             {
                 LogConsole("EXCEPTION SAVING FILE LOG: " + ex.Message, Severity.FATAL_ERROR);
             }
-#endif
         }
 
         private static string CreateLog(string message, Severity severity, byte numberOfMilliseconds = 3)

@@ -7,6 +7,7 @@ namespace Tools.ObjectHandlers
     public static class Properties
     {
 #if WPF
+        //NEED TO BE TESTED!
         public static DependencyProperty BorderBrushProperty { get; private set; }
 #endif
 

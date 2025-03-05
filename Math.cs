@@ -28,7 +28,7 @@ namespace Tools
         }
 
         /// <summary>
-        /// Simply check that min is < than max, otherwise will swap the 2 values
+        /// Simply check that min is &lt; than max, otherwise will swap the 2 values
         /// </summary>
         private static (T minOk, T maxOk) SortMinMax<T>(T min, T max) where T : IComparable<T>
         {
@@ -45,7 +45,7 @@ namespace Tools
         /// <summary>
         /// Check that the input text contains only number or number with dots
         /// </summary>
-        /// <param name="acceptDots">TRUE -> The input text can containt numbers AND dots</param>
+        /// <param name="acceptDots">TRUE -&gt; The input text can containt numbers AND dots</param>
         public static bool IsTextNumeric(string text, bool acceptDots = false)
         {
             if (acceptDots)
