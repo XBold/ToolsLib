@@ -3,9 +3,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Collections.Concurrent;
 using static Tools.Logger.Logger;
-using Tools.Logger;
 using Tools.ValidationsAndExeptions;
 using static Tools.Network.NetworkConstants;
+using Tools.Logger;
 
 namespace Tools.Network
 {

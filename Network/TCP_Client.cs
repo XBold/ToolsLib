@@ -2,8 +2,8 @@
 using System.Text;
 using Tools.ValidationsAndExeptions;
 using static Tools.Logger.Logger;
-using Tools.Logger;
 using static Tools.Network.NetworkConstants;
+using Tools.Logger;
 
 namespace Tools.Network
 {
