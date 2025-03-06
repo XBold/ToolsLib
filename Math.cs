@@ -60,7 +60,6 @@ namespace Tools
             }
         }
 
-
         //IMPORTED MANUALLY FROM SYSTEM.MATH
         public static double Abs(double value) => System.Math.Abs(value);
         public static float Abs(float value) => System.Math.Abs(value);

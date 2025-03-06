@@ -116,8 +116,7 @@ namespace Tools.Network
 
                 _ = UpdateConnectionStateAsync(false);
 
-                if (OnDisconnection != null)
-                    OnDisconnection.Invoke();
+                OnDisconnection?.Invoke();
             }
             catch (Exception ex)
             {
