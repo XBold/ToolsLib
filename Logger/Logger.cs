@@ -29,7 +29,7 @@ namespace Tools.Logger
 #if WPF
             try
             {
-                File.AppendAllText(filePathAndName, CreateLog(message, severity, numberOfMilliseconds));
+                File.AppendAllText(filePathAndName, CreateLog(message, severity, numberOfMilliseconds) + Environment.NewLine);
             }
             catch (Exception ex)
             {
