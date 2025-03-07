@@ -25,11 +25,12 @@ namespace Tools.Logger
         /// <param name="numberOfMilliseconds">Number of milliseconds to use in the date and time. 0 = NO DATE AND TIME. Parameter not specified = 3 millseconds unit</param>
         public static void Log(string message, Severity severity, string filePathAndName = "log.txt", byte numberOfMilliseconds = defaultMiliseconds)
         {
-            LogConsole(message, severity, numberOfMilliseconds);
+            string log = CreateLog(message, severity, numberOfMilliseconds);
+            Console.WriteLine(log);
 #if WPF
             try
             {
-                File.AppendAllText(filePathAndName, CreateLog(message, severity, numberOfMilliseconds) + Environment.NewLine);
+                File.AppendAllText(filePathAndName, log + Environment.NewLine);
             }
             catch (Exception ex)
             {
@@ -43,11 +44,18 @@ namespace Tools.Logger
 
         protected static string CreateLog(string message, Severity severity, byte numberOfMilliseconds = defaultMiliseconds)
         {
-            string format = "dd-MM-yyyy HH:mm:ss:" + new string('f', Math.Limit(numberOfMilliseconds, 1, 7));
-            format += " ";
-            string sev = severity == Severity.INFO ? "[INFO]" : severity == Severity.WARNING ? "[WARNING]" : severity == Severity.CRITICAL ? "[CRITICAL]" : severity == Severity.FATAL_ERROR ? "[FATAL ERROR]" : "[NO SEVERITY SPECIFIED!]";
+            int digits = Math.Limit(numberOfMilliseconds, 1, 7);
+            string format = "dd-MM-yyyy HH:mm:ss:" + new string('f', digits) + " ";
+
+            string sev = severity == Severity.INFO ? "[INFO]" :
+                         severity == Severity.WARNING ? "[WARNING]" :
+                         severity == Severity.CRITICAL ? "[CRITICAL]" :
+                         severity == Severity.FATAL_ERROR ? "[FATAL ERROR]" :
+                         "[NO SEVERITY SPECIFIED!]";
             sev += " ";
+
             return sev + (numberOfMilliseconds > 0 ? DateTime.Now.ToString(format) : "") + message;
         }
+
     }
 }
