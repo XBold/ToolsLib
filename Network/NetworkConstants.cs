@@ -7,5 +7,7 @@
         public const int DefaultPort = 1812;
         public const string IPName = "IP";
         public const string PortName = "PORT";
+        public const int GoodRSSI = -55;
+        public const int BadRSSI = -90;
     }
 }

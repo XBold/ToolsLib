@@ -30,7 +30,7 @@ namespace Tools
         /// <summary>
         /// Simply check that min is &lt; than max, otherwise will swap the 2 values
         /// </summary>
-        private static (T minOk, T maxOk) SortMinMax<T>(T min, T max) where T : IComparable<T>
+        public static (T minOk, T maxOk) SortMinMax<T>(T min, T max) where T : IComparable<T>
         {
             if (min.CompareTo(max) > 0)
             {
